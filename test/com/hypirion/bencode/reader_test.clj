@@ -1,6 +1,5 @@
 (ns com.hypirion.bencode.reader-test
-  (:require [clojure.test :refer :all]
-            [clojure.java.io :as io])
+  (:require [clojure.test :refer :all])
   (:import (com.hypirion.bencode BencodeReader BencodeReadException)
            (java.io ByteArrayInputStream EOFException)))
 

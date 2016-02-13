@@ -213,7 +213,8 @@ public final class BencodeReader implements Closeable {
     }
 
     /**
-     * Reads a bencoded value from the <code>InputStream</code>.
+     * Reads a bencoded value from the <code>InputStream</code>. If the stream
+     * is empty, <code>null</code> is returned instead of an error.
      *
      * @since 0.1.0
      * @exception IOException if an IO exception occurs when reading

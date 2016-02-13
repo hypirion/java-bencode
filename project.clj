@@ -13,4 +13,5 @@
                        "-link" "http://docs.oracle.com/javase/8/docs/api/"]}
   :plugins [[lein-shell "0.5.0"]]
   :profiles {:uberjar {:aot :all}
-             :dev {:dependencies [[org.clojure/clojure "1.8.0"]]}})
+             :dev {:dependencies [[org.clojure/clojure "1.8.0"]
+                                  [org.clojure/test.check "0.9.0"]]}})

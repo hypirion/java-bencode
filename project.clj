@@ -9,7 +9,8 @@
   :javac-options ["-target" "1.6" "-source" "1.6" "-Xlint:-options"]
   :scm {:dir ".."}
   :aliases {"javadoc" ["shell" "javadoc" "-d" "javadoc/${:version}"
-                       "-sourcepath" "src" "com.hypirion.bencode"]}
+                       "-sourcepath" "src" "com.hypirion.bencode"
+                       "-link" "http://docs.oracle.com/javase/8/docs/api/"]}
   :plugins [[lein-shell "0.5.0"]]
   :profiles {:uberjar {:aot :all}
              :dev {:dependencies [[org.clojure/clojure "1.8.0"]]}})

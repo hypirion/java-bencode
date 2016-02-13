@@ -1,15 +1,45 @@
+/*
+ * Copyright (c) 2016 Jean Niklas L'orange. All rights reserved.
+ *
+ * The use and distribution terms for this software are covered by the
+ * Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+ * which can be found in the file LICENSE at the root of this distribution.
+ *
+ * By using this software in any fashion, you are agreeing to be bound by
+ * the terms of this license.
+ *
+ * You must not remove this notice, or any other, from this software.
+ */
 package com.hypirion.bencode;
 
 import java.io.*;
 import java.util.*;
 
+/**
+ * A BencodeReader reads Bencoded values from an {@link InputStream}.
+ *
+ * @since 0.1.0
+ */
 public final class BencodeReader implements Closeable {
     private PushbackInputStream input;
 
+    /**
+     * Creates a new <code>BencodeReader</code> out of <code>input</code>. The
+     * <code>BencodeReader</code> will only read the exact value(s) one
+     * requests, and will not buffer values.
+     *
+     * @since 0.1.0
+     * @param input the <code>InputStream</code> to read from
+     */
     public BencodeReader(InputStream input) {
         this.input = new PushbackInputStream(input, 1);
     }
 
+    /**
+     * Closes the underlying <code>InputStream</code>.
+     *
+     * @exception IOException if an IO exception occurs when closing
+     */
     public void close() throws IOException {
         input.close();
     }
@@ -31,6 +61,14 @@ public final class BencodeReader implements Closeable {
         return val;
     }
 
+    /**
+     * Reads a bencoded long from the <code>InputStream</code>.
+     *
+     * @since 0.1.0
+     * @exception IOException if an IO exception occurs when reading
+     * @exception EOFException if the stream ended unexpectedly
+     * @exception BencodeReadException if the value read is not a properly bencoded long
+     */
     public long readLong() throws IOException, BencodeReadException {
         int initial = forceRead();
         if (initial != 'i') {
@@ -89,6 +127,14 @@ public final class BencodeReader implements Closeable {
         }
     }
 
+    /**
+     * Reads a bencoded <code>String</code> from the <code>InputStream</code>.
+     *
+     * @since 0.1.0
+     * @exception IOException if an IO exception occurs when reading
+     * @exception EOFException if the stream ended unexpectedly
+     * @exception BencodeReadException if the value read is not a properly bencoded String
+     */
     public String readString() throws IOException, BencodeReadException {
         int len = readLen();
         // now read until we have the entire thing
@@ -110,6 +156,15 @@ public final class BencodeReader implements Closeable {
         return new String(bs, "UTF-8");
     }
 
+    /**
+     * Reads a bencoded <code>List</code> from the <code>InputStream</code>. The
+     * <code>List</code> may contain lists and maps itself.
+     *
+     * @since 0.1.0
+     * @exception IOException if an IO exception occurs when reading
+     * @exception EOFException if the stream ended unexpectedly
+     * @exception BencodeReadException if the value read is not a properly bencoded List
+     */
     public List<Object> readList() throws IOException, BencodeReadException {
         int initial = forceRead();
         if (initial != 'l') {
@@ -128,6 +183,16 @@ public final class BencodeReader implements Closeable {
         return al;
     }
 
+    /**
+     * Reads a bencoded <code>Map</code> (dict in the specification) from the
+     * <code>InputStream</code>. The <code>Map</code> may contain lists and maps
+     * itself.
+     *
+     * @since 0.1.0
+     * @exception IOException if an IO exception occurs when reading
+     * @exception EOFException if the stream ended unexpectedly
+     * @exception BencodeReadException if the value read is not a properly bencoded Map
+     */
     public Map<String, Object> readDict() throws IOException, BencodeReadException {
         int initial = forceRead();
         if (initial != 'd') {
@@ -147,6 +212,14 @@ public final class BencodeReader implements Closeable {
         return hm;
     }
 
+    /**
+     * Reads a bencoded value from the <code>InputStream</code>.
+     *
+     * @since 0.1.0
+     * @exception IOException if an IO exception occurs when reading
+     * @exception EOFException if the stream ended unexpectedly
+     * @exception BencodeReadException if the value read is not a properly bencoded value
+     */
     public Object read() throws IOException, BencodeReadException {
         int t = input.read();
         if (t == -1) {

@@ -1,0 +1,9 @@
+# This is really java, but easier to say it's a Clojure project because we use
+# `lein test` anyway.
+language: clojure
+lein: lein2
+jdk:
+  - openjdk6
+  - openjdk7
+  - oraclejdk7
+  - oraclejdk8

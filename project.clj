@@ -1,8 +1,9 @@
 (defproject com.hypirion/bencode "0.1.0-SNAPSHOT"
-  :description "Java implementation Bencode."
+  :description "Java implementation of Bencode."
   :url "https://github.com/hyPiRion/java-bencode"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :deploy-repositories [["releases" :clojars]]
   :dependencies []
   :source-paths []
   :java-source-paths ["src"]

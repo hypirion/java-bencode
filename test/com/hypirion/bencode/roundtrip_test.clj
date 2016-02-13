@@ -8,15 +8,17 @@
            (java.io PipedInputStream PipedOutputStream)))
 
 (defn- roundtrip [& vals]
-  (with-open [sink (PipedInputStream. (* 1024 1024 30))
+  (with-open [sink (PipedInputStream.)
               source (PipedOutputStream. sink)
               input (BencodeReader. sink)
               output (BencodeWriter. source)]
-    (doseq [val vals]
-      (.write output val))
-    (.close source)
-    (doall (take-while #(not (nil? %))
-                       (repeatedly #(.read input))))))
+    (let [res (take-while #(not (nil? %))
+                          (repeatedly #(.read input)))]
+      (future (dorun res))
+      (doseq [val vals]
+        (.write output val))
+      (.close source)
+      (doall res))))
 
 (deftest basic-roundtrip
   (testing "that basic roundtripping works"

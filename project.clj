@@ -1,4 +1,4 @@
-(defproject com.hypirion/bencode "0.1.0"
+(defproject com.hypirion/bencode "0.1.1-SNAPSHOT"
   :description "Java implementation of Bencode."
   :url "https://github.com/hyPiRion/java-bencode"
   :license {:name "Eclipse Public License"

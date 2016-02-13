@@ -118,6 +118,9 @@ public final class BencodeWriter implements Closeable {
         else if (o instanceof Integer) {
             writeLong(((Integer) o).longValue());
         }
+        else if (o instanceof String) {
+            writeString((String) o);
+        }
         // Do not support smaller types, at least not for now
         else if (o instanceof List) {
             writeList((List<Object>) o);

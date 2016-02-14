@@ -20,7 +20,7 @@ import java.util.*;
  *
  * @since 0.1.0
  */
-public final class BencodeWriter implements Closeable {
+public final class BencodeWriter implements Closeable, Flushable {
     private OutputStream out;
 
     /**
@@ -40,6 +40,15 @@ public final class BencodeWriter implements Closeable {
      */
     public void close() throws IOException {
         out.close();
+    }
+
+    /**
+     * Flushes the underlying <code>OutputStream</code>.
+     *
+     * @exception IOException if an IO exception occurs when flushing
+     */
+    public void flush() throws IOException {
+        out.flush();
     }
 
     /**
